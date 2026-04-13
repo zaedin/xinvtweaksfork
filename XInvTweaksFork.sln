@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XInvTweaksFork", "XInvTweaksFork\XInvTweaksFork.csproj", "{D47D780C-1ECA-40AF-951D-0BAE4EC25DE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBuild", "ZZCakeBuild\CakeBuild.csproj", "{2A1155C9-678D-48E7-84F2-3AFAF48C7FD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D47D780C-1ECA-40AF-951D-0BAE4EC25DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47D780C-1ECA-40AF-951D-0BAE4EC25DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47D780C-1ECA-40AF-951D-0BAE4EC25DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47D780C-1ECA-40AF-951D-0BAE4EC25DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A1155C9-678D-48E7-84F2-3AFAF48C7FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A1155C9-678D-48E7-84F2-3AFAF48C7FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A1155C9-678D-48E7-84F2-3AFAF48C7FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A1155C9-678D-48E7-84F2-3AFAF48C7FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
