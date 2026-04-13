@@ -12,7 +12,7 @@
     "description": "Fork of Xandu's Inventory Tweaks for version 1.22 with fixed duplicating bugs",
     "version": "1.9.0",
     "dependencies": {
-        "game": "1.22.0",
-        "survival": "1.22.0"
+        "game": "1.22.0-rc.*",
+        "survival": "1.22.0-rc.*"
     }
 }
