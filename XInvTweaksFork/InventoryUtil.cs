@@ -485,6 +485,9 @@ public class InventoryUtil
 
         player.InventoryManager.Find(slot =>
         {
+            // Ignore all slots that are in the crafting grid, which stops allowing to
+            // quick-stack items from the crafting output without consuming materials
+            if (slot.Inventory.ClassName == GlobalConstants.craftingInvClassName) return false;
             if (slot.Itemstack?.Collectible == collectible)
             {
                 if (tempSlot != null)
