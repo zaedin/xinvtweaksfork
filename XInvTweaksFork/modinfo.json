@@ -1,14 +1,18 @@
 {
-    "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
-    "type": "Code",
+    "type": "code",
     "modid": "xinvtweaksfork",
-    "name": "XInvTweaksFork",
+    "name": "Xandus Inventory Tweaks Fork",
     "authors": [
-        "Unknown"
+        "Xandu",
+        "Zaedin"
     ],
-    "description": "To be added",
-    "version": "1.0.0",
+    "side": "universal",
+    "requiredOnClient": true,
+    "requiredOnServer": false,
+    "description": "Fork of Xandu's Inventory Tweaks for version 1.22 with fixed duplicating bugs",
+    "version": "1.9.0",
     "dependencies": {
-        "game": "1.21.0"
+        "game": "1.22.0",
+        "survival": "1.22.0"
     }
 }
