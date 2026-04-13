@@ -16,21 +16,21 @@ internal class CollectibleObjectPatch
             XInvTweaksForkModSystem.Config.delay);
     }
 
-    public static void DamageItemPostfix(CollectibleObject __instance, Entity byEntity, ItemSlot itemslot)
+    public static void DamageItemPostfix(CollectibleObject __instance, Entity byEntity, ItemSlot itemSlot)
     {
         var player = byEntity as EntityPlayer;
         if (player?.Api.Side != EnumAppSide.Client) return;
-        if (__instance.Tool == null || itemslot == null) return;
-        if (!player.Player.InventoryManager.Inventories.ContainsValue(itemslot.Inventory)) return;
+        if (__instance.Tool == null || itemSlot == null) return;
+        if (!player.Player.InventoryManager.Inventories.ContainsValue(itemSlot.Inventory)) return;
 
-        var durability = itemslot.Itemstack?.Attributes.GetInt("durability", 99999) ?? 0;
-        if (XInvTweaksForkModSystem.Config.toolSwitchDurability == 0 && itemslot.Itemstack != null) return;
+        var durability = itemSlot.Itemstack?.Attributes.GetInt("durability", 99999) ?? 0;
+        if (XInvTweaksForkModSystem.Config.toolSwitchDurability == 0 && itemSlot.Itemstack != null) return;
         if (durability > XInvTweaksForkModSystem.Config.toolSwitchDurability || durability == 0) return;
 
         ItemSlot bestResult = null;
         player.Player.InventoryManager.Find(slot2 =>
         {
-            if (slot2 == itemslot) return false;
+            if (slot2 == itemSlot) return false;
             if (slot2.Itemstack?.Collectible?.Tool == __instance.Tool)
             {
                 durability = slot2.Itemstack?.Attributes.GetInt("durability", 99999) ?? 0;
@@ -63,7 +63,7 @@ internal class CollectibleObjectPatch
                         break;
                     }
 
-                var packet = bestResult.Inventory.TryFlipItems(slotID, itemslot);
+                var packet = bestResult.Inventory.TryFlipItems(slotID, itemSlot);
                 (player.Api as ClientCoreAPI)?.Network.SendPacketClient(packet);
             }, 0);
     }
