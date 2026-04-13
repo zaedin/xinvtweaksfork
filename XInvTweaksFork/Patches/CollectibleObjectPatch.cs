@@ -13,7 +13,7 @@ internal class CollectibleObjectPatch
         if (!__result) return;
         byPlayer?.Entity?.World.RegisterCallback(
             _ => Callback(__instance, byPlayer.InventoryManager?.ActiveHotbarSlot, byPlayer),
-            XInvTweaksForkModSystem.Config.delay);
+            XInvTweaksForkModSystem.Config.Delay);
     }
 
     public static void DamageItemPostfix(CollectibleObject __instance, Entity byEntity, ItemSlot itemSlot)
@@ -24,8 +24,8 @@ internal class CollectibleObjectPatch
         if (!player.Player.InventoryManager.Inventories.ContainsValue(itemSlot.Inventory)) return;
 
         var durability = itemSlot.Itemstack?.Attributes.GetInt("durability", 99999) ?? 0;
-        if (XInvTweaksForkModSystem.Config.toolSwitchDurability == 0 && itemSlot.Itemstack != null) return;
-        if (durability > XInvTweaksForkModSystem.Config.toolSwitchDurability || durability == 0) return;
+        if (XInvTweaksForkModSystem.Config.ToolSwitchDurability == 0 && itemSlot.Itemstack != null) return;
+        if (durability > XInvTweaksForkModSystem.Config.ToolSwitchDurability || durability == 0) return;
 
         ItemSlot bestResult = null;
         player.Player.InventoryManager.Find(slot2 =>
@@ -34,7 +34,7 @@ internal class CollectibleObjectPatch
             if (slot2.Itemstack?.Collectible?.Tool == __instance.Tool)
             {
                 durability = slot2.Itemstack?.Attributes.GetInt("durability", 99999) ?? 0;
-                if (durability <= XInvTweaksForkModSystem.Config.toolSwitchDurability) return false;
+                if (durability <= XInvTweaksForkModSystem.Config.ToolSwitchDurability) return false;
 
                 if (slot2.Itemstack.Collectible == __instance)
                 {

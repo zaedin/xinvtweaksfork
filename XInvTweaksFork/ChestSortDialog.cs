@@ -119,7 +119,7 @@ public class ChestSortDialog : HudElement
         TryOpen();
     }
 
-    public void OnInventoryOpend(ElementBounds parent)
+    public void OnInventoryOpened(ElementBounds parent)
     {
         openedContainers++;
         if (openedContainers == 1) OpenDialog(parent);

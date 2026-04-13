@@ -30,7 +30,6 @@ public class XInvTweaksForkModSystem : ModSystem
 
     private static void DoHarmonyPatch()
     {
-        if (harmony != null) return;
         harmony = new Harmony("XInvTweakPatch");
         harmony.PatchAll(Assembly.GetExecutingAssembly());
     }
@@ -54,35 +53,25 @@ public class XInvTweaksForkModSystem : ModSystem
         PatchClient();
         RegisterKeys();
 
-        if (Config.extendChestUi)
-        {
-            chestSortDialog = new ChestSortDialog(capi);
+        if (!Config.ExtendChestUi) return;
+        chestSortDialog = new ChestSortDialog(capi);
 
-            GuiDialog? invDialog = capi.Gui.LoadedGuis.OfType<GuiDialogInventory>().FirstOrDefault();
+        GuiDialog? invDialog = capi.Gui.LoadedGuis.OfType<GuiDialogInventory>().FirstOrDefault();
 
-            if (invDialog == null) return;
-            invDialog.OnOpened += () =>
-            {
-                chestSortDialog.OnInventoryOpend(invDialog.Composers["maininventory"].Bounds);
-            };
-            invDialog.OnClosed += () => { chestSortDialog.OnInventoryClosed(); };
-        }
-        else
-        {
-            chestSortDialog = null;
-        }
+        if (invDialog == null) return;
+        invDialog.OnOpened += () => chestSortDialog.OnInventoryOpened(invDialog.Composers["maininventory"].Bounds);
+        invDialog.OnClosed += () => { chestSortDialog.OnInventoryClosed(); };
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        harmony?.UnpatchAll("XInvTweakPatch");
-        harmony = null;
+        harmony.UnpatchAll("XInvTweakPatch");
     }
 
-    public void LoadConfig()
+    private void LoadConfig()
     {
-        path = "xinvtweaks.json";
+        path = "xinvtweaksfork.json";
 
         try
         {
@@ -90,7 +79,7 @@ public class XInvTweaksForkModSystem : ModSystem
         }
         catch (Exception)
         {
-            Config = null;
+            Config = new InvTweaksConfig();
         }
 
         Config ??= new InvTweaksConfig();
@@ -134,7 +123,7 @@ public class XInvTweaksForkModSystem : ModSystem
         api.StoreModConfig(Config, path);
     }
 
-    public void OnWorldLoaded()
+    private void OnWorldLoaded()
     {
         var toAdd = new Dictionary<string, int>();
         var toRemove = new List<string>();
@@ -186,41 +175,41 @@ public class XInvTweaksForkModSystem : ModSystem
         api.StoreModConfig(Config, path);
     }
 
-    public void PatchClient()
+    private void PatchClient()
     {
         DoHarmonyPatch();
-        if (Config.tools)
+        if (Config.Tools)
             ManualPatch.PatchMethod(harmony, typeof(CollectibleObject), typeof(CollectibleObjectPatch), "DamageItem");
 
         //if (Config.groundStorage) ManualPatch.PatchMethod(harmony, typeof(CollectibleBehaviorGroundStorable), typeof(CollectibleObjectPatch), "Interact");
-        if (Config.groundStorage)
+        if (Config.GroundStorage)
             ManualPatch.PatchMethod(harmony, typeof(BlockEntityGroundStorage), typeof(BlockEntityGroundStoragePatch),
                 "OnPlayerInteractStart");
 
-        if (Config.blocks)
+        if (Config.Blocks)
             ManualPatch.PatchMethod(harmony, typeof(Block), typeof(CollectibleObjectPatch), "TryPlaceBlock");
 
-        if (Config.stairs)
+        if (Config.Stairs)
             ManualPatch.PatchMethod(harmony, typeof(BlockStairs), typeof(CollectibleObjectPatch), "TryPlaceBlock");
 
         //if (Config.piles) ManualPatch.PatchMethod(harmony, typeof(BlockEntityItemPile), typeof(CollectibleObjectPatch), "OnPlayerInteract");
-        if (Config.piles)
+        if (Config.Piles)
             ManualPatch.PatchMethod(harmony, typeof(BlockEntityItemPile), typeof(BlockEntityItemPilePatch),
                 "OnPlayerInteract");
 
-        if (Config.extendChestUi)
+        if (Config.ExtendChestUi)
             ManualPatch.PatchMethod(harmony, typeof(GuiDialogBlockEntityInventory),
                 typeof(GuiDialogBlockEntityInventoryPatch), "OnGuiOpened");
 
-        if (Config.extendChestUi)
+        if (Config.ExtendChestUi)
             ManualPatch.PatchMethod(harmony, typeof(GuiDialogBlockEntityInventory),
                 typeof(GuiDialogBlockEntityInventoryPatch), "OnGuiClosed");
 
-        if (Config.crateSwitch)
+        if (Config.CrateSwitch)
             ManualPatch.PatchMethod(harmony, typeof(BlockEntityCrate), typeof(BlockEntityCratePatch),
                 "OnBlockInteractStart");
 
-        if (Config.seeds)
+        if (Config.Seeds)
         {
             ManualPatch.PatchMethod(harmony, typeof(ItemPlantableSeed), typeof(CollectibleObjectPatch),
                 "OnHeldInteractStart");
@@ -231,10 +220,10 @@ public class XInvTweaksForkModSystem : ModSystem
                 ManualPatch.PatchMethod(harmony, type, typeof(CollectibleObjectPatch), "OnHeldInteractStart");
         }
 
-        if (Config.strgClick)
+        if (Config.StrgClick)
             ManualPatch.PatchMethod(harmony, typeof(InventoryBase), typeof(InventoryBasePatch), "ActivateSlot");
 
-        if (Config.pushPullWheel)
+        if (Config.PushPullWheel)
             ManualPatch.PatchMethod(harmony, typeof(GuiElementItemSlotGridBase),
                 typeof(GuiElementItemSlotGridBasePatch), "OnMouseWheel");
         //if (Config.survivalPick) ManualPatch.PatchMethod(harmony, typeof(SystemMouseInWorldInteractions), typeof(SystemMouseInWorldInteractionsPatch), "HandleMouseInteractionsBlockSelected");
@@ -242,7 +231,7 @@ public class XInvTweaksForkModSystem : ModSystem
         capi.Event.LevelFinalize += OnWorldLoaded;
     }
 
-    public void RegisterKeys()
+    private void RegisterKeys()
     {
         capi.Input.RegisterHotKey("pushinventory", Lang.Get("xinvtweaksfork:pushinventory"), GlKeys.Z,
             HotkeyType.InventoryHotkeys);
@@ -267,11 +256,11 @@ public class XInvTweaksForkModSystem : ModSystem
 
     public void OnInventoryOpened(ElementBounds parent)
     {
-        chestSortDialog?.OnInventoryOpend(parent);
+        chestSortDialog.OnInventoryOpened(parent);
     }
 
     public void OnInventoryClosed()
     {
-        chestSortDialog?.OnInventoryClosed();
+        chestSortDialog.OnInventoryClosed();
     }
 }

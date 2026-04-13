@@ -5,28 +5,27 @@ namespace XInvTweaksFork;
 
 public class InvTweaksConfig
 {
-    public bool blocks = true;
+    public readonly bool Blocks = true;
 
-    public Dictionary<string, int> BulkQuanties = new();
-    public bool crateSwitch = true;
-    public int delay = 200;
-    public bool extendChestUi = true;
-    public bool groundStorage = true;
-    public SortedSet<int> LockedSlots = new();
-    public bool piles = true;
+    public readonly Dictionary<string, int> BulkQuanties = new();
+    public readonly bool CrateSwitch = true;
+    public readonly int Delay = 200;
+    public readonly bool ExtendChestUi = true;
+    public readonly bool GroundStorage = true;
+    public readonly SortedSet<int> LockedSlots = new();
+    public readonly bool Piles = true;
 
-    public Dictionary<string, int> Priorities = new();
+    public readonly Dictionary<string, int> Priorities = new();
 
-    //public bool survivalPick = true;
-    public bool pushPullWheel = true;
-    public bool seeds = true;
-    public SortedSet<string> SortBlacklist = new();
+    public readonly bool PushPullWheel = true;
+    public readonly bool Seeds = true;
+    public readonly SortedSet<string> SortBlacklist = new();
 
-    public List<string> SortOrder = new();
-    public List<string> StackOrder = new();
-    public bool stairs = true;
-    public List<EnumItemStorageFlags> StorageFlagsOrder = new();
-    public bool strgClick = true;
-    public bool tools = true;
-    public int toolSwitchDurability = 0;
+    public readonly List<string> SortOrder = new();
+    public readonly List<string> StackOrder = new();
+    public readonly bool Stairs = true;
+    public readonly List<EnumItemStorageFlags> StorageFlagsOrder = new();
+    public readonly bool StrgClick = true;
+    public readonly bool Tools = true;
+    public readonly int ToolSwitchDurability = 0;
 }
